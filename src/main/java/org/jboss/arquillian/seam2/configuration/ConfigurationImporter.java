@@ -51,13 +51,13 @@ public class ConfigurationImporter
    public Seam2Configuration from(ArquillianDescriptor descriptor)
    {
       final Map<String, String> extensionProperties = extractPropertiesFromDescriptor(SEAM2_EXTENSION_QUALIFIER, descriptor);
-      return createPersistenceConfiguration(extensionProperties);
+      return createConfiguration(extensionProperties);
    }
 
    public Seam2Configuration from(Properties properties)
    {
       final Map<String, String> fieldsWithValues = convertKeys(properties);
-      return createPersistenceConfiguration(fieldsWithValues);
+      return createConfiguration(fieldsWithValues);
    }
 
    private Map<String, String> convertKeys(Properties properties)
@@ -89,9 +89,9 @@ public class ConfigurationImporter
       return sb.toString();
    }
 
-   private Seam2Configuration createPersistenceConfiguration(final Map<String, String> fieldsWithValues)
+   private Seam2Configuration createConfiguration(final Map<String, String> fieldsWithValues)
    {
-      Seam2Configuration persistenceConfiguration = new Seam2Configuration();
+      Seam2Configuration configuration = new Seam2Configuration();
       ConfigurationTypeConverter typeConverter = new ConfigurationTypeConverter();
       List<Field> fields = SecurityActions.getAccessibleFields(Seam2Configuration.class);
 
@@ -104,7 +104,7 @@ public class ConfigurationImporter
             Class<?> fieldType = field.getType();
             try
             {
-               field.set(persistenceConfiguration, typeConverter.convert(value, typeConverter.box(fieldType)));
+               field.set(configuration, typeConverter.convert(value, typeConverter.box(fieldType)));
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ public class ConfigurationImporter
          }
       }
 
-      return persistenceConfiguration;
+      return configuration;
    }
 
    private Map<String, String> extractPropertiesFromDescriptor(String extenstionName, ArquillianDescriptor descriptor)
