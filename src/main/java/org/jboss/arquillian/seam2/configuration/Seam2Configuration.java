@@ -15,26 +15,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.seam2.client;
+package org.jboss.arquillian.seam2.configuration;
 
-import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
-import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
-import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.jboss.arquillian.seam2.configuration.Seam2ConfigurationProducer;
+import java.io.Serializable;
 
 /**
  *
  * @author <a href="mailto:bartosz.majsak@gmail.com">Bartosz Majsak</a>
  *
- * @version $Revision: $
  */
-public class Seam2Extension implements LoadableExtension
+public class Seam2Configuration implements Serializable
 {
-   @Override
-   public void register(ExtensionBuilder builder)
+
+   private static final long serialVersionUID = 400180473206524250L;
+
+   public static final String SEAM_ARTIFACT = "org.jboss.seam:jboss-seam";
+
+   public static final String JBOSS_EL_ARTIFACT = "org.jboss.el:jboss-el";
+
+   public static final String DEFAULT_SEAM_VERSION = "2.2.2.Final";
+
+   private String seamVersion = "";
+
+   private String jbossElVersion = "1.0_02.CR5";
+
+   // Accessors
+
+   public String getSeamVersion()
    {
-      builder.service(ApplicationArchiveProcessor.class, Seam2ArchiveProcessor.class)
-             .service(AuxiliaryArchiveAppender.class, Seam2ArchiveAppender.class)
-             .observer(Seam2ConfigurationProducer.class);
+      return seamVersion;
    }
+
+   public void setSeamVersion(String seamVersion)
+   {
+      this.seamVersion = seamVersion;
+   }
+
+   public String getJbossElVersion()
+   {
+      return jbossElVersion;
+   }
+
+   public void setJbossElVersion(String jbossElVersion)
+   {
+      this.jbossElVersion = jbossElVersion;
+   }
+
 }

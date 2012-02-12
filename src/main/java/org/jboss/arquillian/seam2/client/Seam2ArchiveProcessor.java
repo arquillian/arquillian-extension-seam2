@@ -20,7 +20,10 @@ package org.jboss.arquillian.seam2.client;
 import java.io.File;
 
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.seam2.ReflectionHelper;
+import org.jboss.arquillian.seam2.configuration.Seam2Configuration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.seam.annotations.In;
 import org.jboss.shrinkwrap.api.Archive;
@@ -43,16 +46,13 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
 
    private static final String ANNOTATION_CLASS_NAME = "org.jboss.seam.annotations.In";
 
-   private static final String SEAM_ARTIFACT = "org.jboss.seam:jboss-seam";
-   private static final String SEAM_ARTIFACT_DEFAULT_VERSION = ":2.2.2.Final";
-
-   private static final String JBOSS_EL_ARTIFACT = "org.jboss.el:jboss-el";
-   private static final String JBOSS_EL_ARTIFACT_DEFAULT_VERSION = ":1.0_02.CR5";
+   @Inject
+   private Instance<Seam2Configuration> configurationInstance;
 
    @Override
    public void process(Archive<?> applicationArchive, TestClass testClass)
    {
-      if(hasSeamAnnotation(testClass))
+      if (hasSeamAnnotation(testClass))
       {
          appendSeamLibraries(applicationArchive);
       }
@@ -60,29 +60,45 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
 
    private void appendSeamLibraries(Archive<?> applicationArchive)
    {
-      final File[] seamDependencies = resolve(SEAM_ARTIFACT, SEAM_ARTIFACT_DEFAULT_VERSION);
-      final File[] jbossElDependencies = resolve(JBOSS_EL_ARTIFACT, JBOSS_EL_ARTIFACT_DEFAULT_VERSION);
+      final File[] seamDependencies = resolveSeamDependencies();
 
       if (applicationArchive instanceof EnterpriseArchive)
       {
+         final File[] jbossElDependencies = resolveArtifact(Seam2Configuration.JBOSS_EL_ARTIFACT, configurationInstance.get().getJbossElVersion());
          final EnterpriseArchive ear = (EnterpriseArchive) applicationArchive;
-
          ear.addAsModules(seamDependencies)
             .addAsLibraries(jbossElDependencies);
-
       }
       else if (applicationArchive instanceof WebArchive)
       {
          final WebArchive war = (WebArchive) applicationArchive;
-         war.addAsLibraries(seamDependencies)
-            .addAsLibraries(jbossElDependencies);
+         war.addAsLibraries(seamDependencies);
       }
       else
       {
          throw new RuntimeException("Unsupported archive format[" + applicationArchive.getClass().getSimpleName()
                + ", " + applicationArchive.getName() + "] for Seam 2 application. Please use WAR or EAR.");
       }
+   }
 
+   private boolean hasSeamAnnotation(TestClass testClass)
+   {
+      return ReflectionHelper.isClassPresent(ANNOTATION_CLASS_NAME) && ReflectionHelper.getFieldsWithAnnotation(testClass.getJavaClass(), In.class).size() > 0;
+   }
+
+   private File[] resolveSeamDependencies()
+   {
+      File[] seamDependencies = null;
+      if (!configurationInstance.get().getSeamVersion().isEmpty())
+      {
+         seamDependencies = resolveArtifact(Seam2Configuration.SEAM_ARTIFACT + ":" + configurationInstance.get().getSeamVersion());
+      }
+      else
+      {
+         seamDependencies = resolveArtifact(Seam2Configuration.SEAM_ARTIFACT, Seam2Configuration.DEFAULT_SEAM_VERSION);
+      }
+
+      return seamDependencies;
    }
 
    /**
@@ -92,21 +108,21 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
     * @param defaultVersion
     * @return
     */
-   private File[] resolve(String artifact, String defaultVersion)
+   private File[] resolveArtifact(final String artifact, final String defaultVersion)
    {
       File[] artifacts = null;
       try
       {
-         artifacts = resolve(artifact);
+         artifacts = resolveArtifact(artifact);
       }
       catch (Exception e)
       {
-         artifacts = resolve(artifact + defaultVersion);
+         artifacts = resolveArtifact(artifact + ":" + defaultVersion);
       }
       return artifacts;
    }
 
-   private File[] resolve(String artifact)
+   private File[] resolveArtifact(final String artifact)
    {
       final MavenDependencyResolver mvnResolver = DependencyResolvers.use(MavenDependencyResolver.class);
 
@@ -122,10 +138,5 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
    private boolean mavenIsUsed()
    {
       return new File(POM_XML).exists();
-   }
-
-   private boolean hasSeamAnnotation(TestClass testClass)
-   {
-      return ReflectionHelper.isClassPresent(ANNOTATION_CLASS_NAME) && ReflectionHelper.getFieldsWithAnnotation(testClass.getJavaClass(), In.class).size() > 0;
    }
 }

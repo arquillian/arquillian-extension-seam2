@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://jboss.org/schema/arquillian"
-    xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+  xmlns="http://jboss.org/schema/arquillian"
+  xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-    <container qualifier="jboss" default="true">
-      <configuration>
-        <property name="jbossHome">target/jboss-4.2.3.GA</property>
-        <property name="javaHome">/usr/lib/jvm/java-6-openjdk</property>
-      </configuration>
-    </container>
+  <container qualifier="jboss" default="true">
+    <configuration>
+      <property name="jbossHome">target/jboss-4.2.3.GA</property>
+      <property name="javaHome">/usr/lib/jvm/java-6-openjdk</property>
+    </configuration>
+  </container>
+
+  <extension qualifier="seam2">
+    <!-- This way you can override Seam version
+         which you have defined in pom.xml -->
+    <property name="seamVersion">2.2.1.Final</property>
+  </extension>
 </arquillian>
