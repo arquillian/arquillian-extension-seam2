@@ -44,7 +44,6 @@
     <version.fest.assert>1.4</version.fest.assert>
     <version.shrinkwrap.descriptors>1.0.0-beta-5</version.shrinkwrap.descriptors>
     <version.seam>2.2.2.Final</version.seam>
-    <version.junit>4.10</version.junit>
 
     <!-- override from parent -->
     <maven.compiler.argument.target>1.5</maven.compiler.argument.target>
@@ -87,15 +86,10 @@
   <dependencies>
 
     <dependency>
-      <groupId>trove</groupId>
-      <artifactId>trove</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.jboss.seam</groupId>
       <artifactId>jboss-seam</artifactId>
       <version>${version.seam}</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -141,13 +135,13 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${version.junit}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -182,7 +176,7 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-managed-5.1</artifactId>
-          <version>1.0.0.CR1</version>
+          <version>1.0.0.CR2</version>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>

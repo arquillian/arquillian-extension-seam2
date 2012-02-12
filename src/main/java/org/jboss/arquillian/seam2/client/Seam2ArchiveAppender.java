@@ -18,7 +18,7 @@
 package org.jboss.arquillian.seam2.client;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
-import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
+import org.jboss.arquillian.container.test.spi.client.deployment.CachedAuxilliaryArchiveAppender;
 import org.jboss.arquillian.seam2.ReflectionHelper;
 import org.jboss.arquillian.seam2.container.Seam2RemoteExtension;
 import org.jboss.shrinkwrap.api.Archive;
@@ -27,14 +27,16 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
- * ArchiveAppender
+ *
+ * @author <a href="mailto:bartosz.majsak@gmail.com">Bartosz Majsak</a>
  *
  * @version $Revision: $
  */
-public class Seam2ArchiveAppender implements AuxiliaryArchiveAppender
+public class Seam2ArchiveAppender extends CachedAuxilliaryArchiveAppender
 {
+
    @Override
-   public Archive<?> createAuxiliaryArchive()
+   protected Archive<?> buildArchive()
    {
       return ShrinkWrap.create(JavaArchive.class, "arquillian-seam2.jar")
                        .addClass(ReflectionHelper.class)
