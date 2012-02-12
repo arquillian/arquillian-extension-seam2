@@ -18,6 +18,7 @@
 package org.jboss.arquillian.seam2.client;
 
 import java.io.File;
+import java.io.InputStream;
 
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.seam2.ReflectionHelper;
@@ -39,6 +40,8 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
  */
 public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
 {
+   private static final String POM_XML = "pom.xml";
+
    private static final String ANNOTATION_CLASS_NAME = "org.jboss.seam.annotations.In";
 
    private static final String SEAM_ARTIFACT = "org.jboss.seam:jboss-seam";
@@ -52,11 +55,11 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
    {
       if(hasSeamAnnotation(testClass))
       {
-         appendLibrary(applicationArchive);
+         appendSeamLibraries(applicationArchive);
       }
    }
 
-   private void appendLibrary(Archive<?> applicationArchive)
+   private void appendSeamLibraries(Archive<?> applicationArchive)
    {
       final File[] seamDependencies = resolve(SEAM_ARTIFACT, SEAM_ARTIFACT_DEFAULT_VERSION);
       final File[] jbossElDependencies = resolve(JBOSS_EL_ARTIFACT, JBOSS_EL_ARTIFACT_DEFAULT_VERSION);
@@ -86,7 +89,6 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
    /**
     * Resolves given artifact using POM metadata first. If not found, default version is fetched.
     *
-    * @param mvnResolver
     * @param artifact
     * @param defaultVersion
     * @return
@@ -107,11 +109,21 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
 
    private File[] resolve(String artifact)
    {
-      final MavenDependencyResolver mvnResolver = DependencyResolvers.use(MavenDependencyResolver.class)
-                                                                     .loadMetadataFromPom("pom.xml");
+      final MavenDependencyResolver mvnResolver = DependencyResolvers.use(MavenDependencyResolver.class);
+
+      if (mavenIsUsed())
+      {
+         mvnResolver.loadMetadataFromPom(POM_XML);
+      }
 
       return mvnResolver.artifact(artifact)
                         .resolveAsFiles();
+   }
+
+   private boolean mavenIsUsed()
+   {
+      final InputStream pom = Thread.currentThread().getContextClassLoader().getResourceAsStream(POM_XML);
+      return pom != null;
    }
 
    private boolean hasSeamAnnotation(TestClass testClass)
