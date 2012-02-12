@@ -18,7 +18,6 @@
 package org.jboss.arquillian.seam2.client;
 
 import java.io.File;
-import java.io.InputStream;
 
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.seam2.ReflectionHelper;
@@ -122,8 +121,7 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
 
    private boolean mavenIsUsed()
    {
-      final InputStream pom = Thread.currentThread().getContextClassLoader().getResourceAsStream(POM_XML);
-      return pom != null;
+      return new File(POM_XML).exists();
    }
 
    private boolean hasSeamAnnotation(TestClass testClass)
