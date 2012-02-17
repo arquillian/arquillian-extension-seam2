@@ -39,6 +39,8 @@ public class Seam2Configuration implements Serializable
 
    private String jbossElVersion = "1.0_02.CR5";
 
+   private boolean autoPackage = true;
+
    // Accessors
 
    public String getSeamVersion()
@@ -59,6 +61,16 @@ public class Seam2Configuration implements Serializable
    public void setJbossElVersion(String jbossElVersion)
    {
       this.jbossElVersion = jbossElVersion;
+   }
+
+   public boolean isAutoPackage()
+   {
+      return autoPackage;
+   }
+
+   public void setAutoPackage(boolean autoPackage)
+   {
+      this.autoPackage = autoPackage;
    }
 
 }

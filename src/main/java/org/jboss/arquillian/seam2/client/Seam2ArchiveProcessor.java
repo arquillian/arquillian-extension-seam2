@@ -52,7 +52,8 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
    @Override
    public void process(Archive<?> applicationArchive, TestClass testClass)
    {
-      if (hasSeamAnnotation(testClass))
+      boolean shouldEnrichTestArchiveWithSeamLibraries = configurationInstance.get().isAutoPackage();
+      if (hasSeamAnnotation(testClass) && shouldEnrichTestArchiveWithSeamLibraries)
       {
          appendSeamLibraries(applicationArchive);
       }
