@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <!-- Parent -->
   <parent>
@@ -176,17 +177,20 @@
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-managed-5.1</artifactId>
           <version>1.0.0.CR2</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
           <artifactId>jboss-server-manager</artifactId>
           <version>1.0.3.GA</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
           <artifactId>jboss-as-client</artifactId>
           <version>5.1.0.GA</version>
           <type>pom</type>
+          <scope>test</scope>
         </dependency>
       </dependencies>
       <build>
@@ -200,7 +204,7 @@
         </testResources>
       </build>
     </profile>
-        <profile>
+    <profile>
       <id>arq-jbossas-5-remote</id>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -210,12 +214,14 @@
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-remote-5.1</artifactId>
           <version>1.0.0.CR2</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
           <artifactId>jboss-as-client</artifactId>
           <version>5.1.0.GA</version>
           <type>pom</type>
+          <scope>test</scope>
         </dependency>
       </dependencies>
       <build>
@@ -239,11 +245,13 @@
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-managed-4.2</artifactId>
           <version>1.0.0.CR2</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
           <artifactId>jboss-server-manager</artifactId>
           <version>1.0.3.GA</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.client</groupId>
@@ -298,14 +306,12 @@
     </profile>
     <profile>
       <id>arq-jbossas-4-remote</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <dependencies>
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-remote-4.2</artifactId>
           <version>1.0.0.CR2</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.client</groupId>
