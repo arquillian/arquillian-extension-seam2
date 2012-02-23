@@ -40,6 +40,13 @@
   <properties>
     <!-- Versioning -->
     <version.arquillian_core>1.0.0.CR7</version.arquillian_core>
+    <version.arquillian_jbossas>1.0.0.CR3</version.arquillian_jbossas>
+
+    <version.jbossas_4>4.2.3.GA</version.jbossas_4>
+    <version.jbossas_5>5.1.0.GA</version.jbossas_5>
+    <version.jbossas_manager>1.0.3.GA</version.jbossas_manager>
+    <version.dom4j>1.6.1</version.dom4j>
+
     <version.fest.assert>1.4</version.fest.assert>
     <version.shrinkwrap.descriptors>1.0.0-beta-5</version.shrinkwrap.descriptors>
     <version.seam>2.2.2.Final</version.seam>
@@ -175,19 +182,19 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-managed-5.1</artifactId>
-          <version>1.0.0.CR2</version>
+          <version>${version.arquillian_jbossas}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
           <artifactId>jboss-server-manager</artifactId>
-          <version>1.0.3.GA</version>
+          <version>${version.jbossas_manager}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
           <artifactId>jboss-as-client</artifactId>
-          <version>5.1.0.GA</version>
+          <version>${version.jbossas_5}</version>
           <type>pom</type>
           <scope>test</scope>
         </dependency>
@@ -212,13 +219,13 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-remote-5.1</artifactId>
-          <version>1.0.0.CR2</version>
+          <version>${version.arquillian_jbossas}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
           <artifactId>jboss-as-client</artifactId>
-          <version>5.1.0.GA</version>
+          <version>${version.jbossas_5}</version>
           <type>pom</type>
           <scope>test</scope>
         </dependency>
@@ -243,25 +250,25 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-managed-4.2</artifactId>
-          <version>1.0.0.CR2</version>
+          <version>${version.arquillian_jbossas}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.jbossas</groupId>
           <artifactId>jboss-server-manager</artifactId>
-          <version>1.0.3.GA</version>
+          <version>${version.jbossas_manager}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.client</groupId>
           <artifactId>jbossall-client</artifactId>
-          <version>4.2.3.GA</version>
+          <version>${version.jbossas_4}</version>
           <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>dom4j</groupId>
           <artifactId>dom4j</artifactId>
-          <version>1.6.1</version>
+          <version>${version.dom4j}</version>
           <scope>provided</scope>
         </dependency>
       </dependencies>
@@ -282,7 +289,7 @@
                     <artifactItem>
                       <groupId>org.jboss.jbossas</groupId>
                       <artifactId>jboss-as-dist</artifactId>
-                      <version>4.2.3.GA</version>
+                      <version>${version.jbossas_4}</version>
                       <type>zip</type>
                       <overWrite>false</overWrite>
                       <outputDirectory>${project.build.directory}</outputDirectory>
@@ -309,19 +316,19 @@
         <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-jbossas-remote-4.2</artifactId>
-          <version>1.0.0.CR2</version>
+          <version>${version.arquillian_jbossas}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.jboss.client</groupId>
           <artifactId>jbossall-client</artifactId>
-          <version>4.2.3.GA</version>
+          <version>${version.jbossas_4}</version>
           <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>dom4j</groupId>
           <artifactId>dom4j</artifactId>
-          <version>1.6.1</version>
+          <version>${version.dom4j}</version>
           <scope>provided</scope>
         </dependency>
       </dependencies>

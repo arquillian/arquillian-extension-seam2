@@ -6,7 +6,6 @@
   <container qualifier="jboss" default="true">
     <configuration>
       <property name="jbossHome">/home/bartek/dev/as/jboss-4.2.3.GA</property>
-      <property name="javaHome">/usr/lib/jvm/java-6-openjdk</property>
     </configuration>
   </container>
 
