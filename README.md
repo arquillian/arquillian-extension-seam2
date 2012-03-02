@@ -3,7 +3,9 @@ Seam 2 support for Arquillian
 
 * Test enrichment for @In injection points from the Seam 2 Context.
 * Packaging support for adding the Seam 2 framework.
-* Tested on JBoss AS 4.2.3.GA and 5.1.0.Final
+* Tested on JBoss AS 4.2.3.GA and 5.1.0.Final (both remote and managed).
+
+For more details please refer to [Arquillian Confluence](https://docs.jboss.org/author/display/ARQ/Seam+2).
 
 ### Code example
 
