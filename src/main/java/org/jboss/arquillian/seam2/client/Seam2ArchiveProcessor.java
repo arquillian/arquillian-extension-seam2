@@ -26,6 +26,7 @@ import org.jboss.arquillian.seam2.ReflectionHelper;
 import org.jboss.arquillian.seam2.configuration.Seam2Configuration;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.seam.annotations.In;
+import org.jboss.seam.util.Strings;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -90,7 +91,7 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
    private File[] resolveSeamDependencies()
    {
       File[] seamDependencies = null;
-      if (!configurationInstance.get().getSeamVersion().isEmpty())
+      if (!Strings.isEmpty(configurationInstance.get().getSeamVersion()))
       {
          seamDependencies = resolveArtifact(Seam2Configuration.SEAM_ARTIFACT + ":" + configurationInstance.get().getSeamVersion());
       }

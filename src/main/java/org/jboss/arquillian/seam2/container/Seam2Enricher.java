@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.jboss.arquillian.seam2.ReflectionHelper;
+import org.jboss.arquillian.seam2.util.Strings;
 import org.jboss.arquillian.test.spi.TestEnricher;
 import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
@@ -87,7 +88,7 @@ public class Seam2Enricher implements TestEnricher
    {
       final In in = seamComponent.getAnnotation(In.class);
       String name = in.value();
-      if (name.isEmpty())
+      if (Strings.isEmpty(name))
       {
          name = seamComponent.getName();
       }
