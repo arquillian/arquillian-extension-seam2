@@ -22,6 +22,8 @@ import org.jboss.seam.annotations.Name;
 public class FluidOuncesConverter
 {
 
+   private static final double OUNCES_MULTIPLIER = 29.5735296;
+
    private String identifier;
 
    public FluidOuncesConverter()
@@ -35,7 +37,12 @@ public class FluidOuncesConverter
 
    public Double convertToMillilitres(Double ounces)
    {
-      return ounces * 29.5735296;
+      return ounces * OUNCES_MULTIPLIER;
+   }
+
+   public Double convertToFluidOunces(Double ml)
+   {
+      return ml / OUNCES_MULTIPLIER;
    }
 
    public String getIdentifier()

@@ -35,7 +35,6 @@ import org.jboss.seam.contexts.Lifecycle;
  * @author <a href="mailto:michaelschuetz83@gmail.com">Michael Schuetz</a>
  * @author <a href="mailto:bartosz.majsak@gmail.com">Bartosz Majsak</a>
  *
- * @version $Revision: $
  */
 public class Seam2Enricher implements TestEnricher
 {

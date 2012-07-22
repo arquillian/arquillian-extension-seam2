@@ -58,14 +58,28 @@ public class ComponentNamedInjectionTestCase
    public void shouldConvertFluidOuncesToMillilitres() throws Exception
    {
       // given
-      Double ouncesToConver = Double.valueOf(8.0d);
+      Double ouncesToConvert = Double.valueOf(8.0d);
       Double expectedMillilitres = Double.valueOf(236.5882368d);
 
       // when
-      Double millilitres = fluidOuncesConverter.convertToMillilitres(ouncesToConver);
+      Double millilitres = fluidOuncesConverter.convertToMillilitres(ouncesToConvert);
 
       // then
       assertThat(millilitres).isEqualTo(expectedMillilitres);
+   }
+
+   @Test
+   public void shouldConvertMillilitresToFluidOunces() throws Exception
+   {
+      // given
+      Double expectedOunces = Double.valueOf(8.0d);
+      Double millilitresToConvert = Double.valueOf(236.5882368d);
+
+      // when
+      Double ounces = fluidOuncesConverter.convertToFluidOunces(millilitresToConvert);
+
+      // then
+      assertThat(ounces).isEqualTo(expectedOunces);
    }
 
 }

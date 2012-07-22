@@ -21,10 +21,11 @@ import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.test.spi.TestEnricher;
 
 /**
+ * Registers all extension points required to be active while running
+ * tests in the container.
  *
  * @author <a href="mailto:bartosz.majsak@gmail.com">Bartosz Majsak</a>
  *
- * @version $Revision: $
  */
 public class Seam2RemoteExtension implements RemoteLoadableExtension
 {
@@ -32,5 +33,6 @@ public class Seam2RemoteExtension implements RemoteLoadableExtension
    public void register(ExtensionBuilder builder)
    {
       builder.service(TestEnricher.class, Seam2Enricher.class);
+      builder.observer(Seam2TestLifecycleHandler.class);
    }
 }
