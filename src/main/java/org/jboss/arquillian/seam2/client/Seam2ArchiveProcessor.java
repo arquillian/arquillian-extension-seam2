@@ -43,6 +43,8 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
  */
 public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
 {
+   private static final String MVN_ALTERNATE_SETTINGS = "mvn.alternate.settings";
+
    private static final String POM_XML = "pom.xml";
 
    private static final String ANNOTATION_CLASS_NAME = "org.jboss.seam.annotations.In";
@@ -131,6 +133,12 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
       if (mavenIsUsed())
       {
          mvnResolver.loadMetadataFromPom(POM_XML);
+      }
+
+      final String alternateMavenSettings = System.getProperty(MVN_ALTERNATE_SETTINGS);
+      if (alternateMavenSettings != null)
+      {
+         mvnResolver.configureFrom(alternateMavenSettings);
       }
 
       return mvnResolver.artifact(artifact)
