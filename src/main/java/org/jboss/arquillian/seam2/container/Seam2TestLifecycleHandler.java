@@ -5,6 +5,7 @@ import org.jboss.arquillian.test.spi.event.suite.After;
 import org.jboss.arquillian.test.spi.event.suite.Before;
 import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.contexts.Lifecycle;
+import org.jboss.seam.core.Manager;
 
 /**
  * Hooks around test execution to start and destroy Seam Context.
@@ -21,6 +22,7 @@ public class Seam2TestLifecycleHandler
       {
          Lifecycle.beginCall();
       }
+      Manager.instance().initializeTemporaryConversation();
    }
 
    public void destroyContext(@Observes After afterTest)
