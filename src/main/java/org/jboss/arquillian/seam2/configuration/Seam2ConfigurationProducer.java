@@ -18,12 +18,10 @@
 package org.jboss.arquillian.seam2.configuration;
 
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
-import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 
 /**
  *
@@ -35,15 +33,12 @@ import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 public class Seam2ConfigurationProducer
 {
    @Inject @ApplicationScoped
-   Instance<ArquillianDescriptor> descriptor;
-
-   @Inject @ApplicationScoped
    InstanceProducer<Seam2Configuration> configurationProducer;
 
-   public void configure(@Observes BeforeSuite beforeSuiteEvent)
+   public void configure(@Observes ArquillianDescriptor descriptor)
    {
       ConfigurationImporter extractor = new ConfigurationImporter();
-      Seam2Configuration configuration = extractor.from(descriptor.get());
+      Seam2Configuration configuration = extractor.from(descriptor);
       configurationProducer.set(configuration);
    }
 
