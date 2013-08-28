@@ -33,11 +33,11 @@ public class Seam2Configuration implements Serializable
 
    public static final String JBOSS_EL_ARTIFACT = "org.jboss.el:jboss-el";
 
-   public static final String DEFAULT_SEAM_VERSION = "2.2.2.Final";
+   public static final String DEFAULT_SEAM_VERSION = "2.3.1.Final";
 
    private String seamVersion = "";
 
-   private String jbossElVersion = "1.0_02.CR5";
+   private String jbossElVersion = "1.0_02.CR6"; 
 
    private boolean autoPackage = true;
 

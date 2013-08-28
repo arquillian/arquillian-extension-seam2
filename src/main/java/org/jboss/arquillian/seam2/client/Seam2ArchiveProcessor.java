@@ -30,8 +30,8 @@ import org.jboss.seam.util.Strings;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
 
 /**
  * Extends test archive by adding Seam 2 dependecies.
@@ -128,21 +128,24 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
 
    private File[] resolveArtifact(final String artifact)
    {
-      final MavenDependencyResolver mvnResolver = DependencyResolvers.use(MavenDependencyResolver.class);
+      MavenResolverSystem resolver;
+
+      final String alternateMavenSettings = System.getProperty(MVN_ALTERNATE_SETTINGS);
+      if (alternateMavenSettings == null)
+      {
+         resolver = Maven.resolver();
+      }
+      else
+      {
+         resolver = Maven.configureResolver().fromFile(alternateMavenSettings);
+      }
 
       if (mavenIsUsed())
       {
-         mvnResolver.loadMetadataFromPom(POM_XML);
+         resolver.loadPomFromFile(POM_XML);
       }
 
-      final String alternateMavenSettings = System.getProperty(MVN_ALTERNATE_SETTINGS);
-      if (alternateMavenSettings != null)
-      {
-         mvnResolver.configureFrom(alternateMavenSettings);
-      }
-
-      return mvnResolver.artifact(artifact)
-                        .resolveAsFiles();
+      return resolver.resolve(artifact).withTransitivity().asFile();
    }
 
    private boolean mavenIsUsed()

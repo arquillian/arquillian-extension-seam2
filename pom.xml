@@ -40,7 +40,7 @@
   <!-- Properties -->
   <properties>
     <!-- Versioning -->
-    <version.arquillian_core>1.0.1.Final</version.arquillian_core>
+    <version.arquillian_core>1.1.1.Final</version.arquillian_core>
     <version.arquillian_jbossas>1.0.0.CR3</version.arquillian_jbossas>
 
     <version.jbossas_4>4.2.3.GA</version.jbossas_4>
@@ -50,7 +50,7 @@
 
     <version.fest.assert>1.4</version.fest.assert>
     <version.shrinkwrap.descriptors>1.0.0-beta-5</version.shrinkwrap.descriptors>
-    <version.seam>2.2.2.Final</version.seam>
+    <version.seam>2.3.1.Final</version.seam>
 
     <!-- override from parent -->
     <maven.compiler.argument.target>1.5</maven.compiler.argument.target>
@@ -97,6 +97,12 @@
       <artifactId>jboss-seam</artifactId>
       <version>${version.seam}</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.testng</groupId>
+          <artifactId>testng</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -152,6 +158,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.jboss.arquillian.protocol</groupId>
+      <artifactId>arquillian-protocol-servlet</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.easytesting</groupId>
       <artifactId>fest-assert</artifactId>
       <version>${version.fest.assert}</version>
@@ -195,6 +207,49 @@
   </build>
 
   <profiles>
+    <profile>
+      <id>arq-jbossas-7-managed</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.spec</groupId>
+          <artifactId>jboss-javaee-6.0</artifactId>
+          <version>2.0.0.Final</version>
+          <type>pom</type>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.as</groupId>
+          <artifactId>jboss-as-arquillian-container-managed</artifactId>
+          <version>7.2.0.Final</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>jbossas-remote-7</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.spec</groupId>
+          <artifactId>jboss-javaee-web-6.0</artifactId>
+          <version>2.0.0.Final</version>
+          <type>pom</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.as</groupId>
+          <artifactId>jboss-as-arquillian-container-remote</artifactId>
+          <scope>test</scope>
+          <version>7.2.0.Final</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
     <profile>
       <id>arq-jbossas-5-managed</id>
       <activation>

@@ -27,7 +27,10 @@ public class Seam2TestLifecycleHandler
 
    public void destroyContext(@Observes After afterTest)
    {
-      Lifecycle.endCall();
+      if (Contexts.getApplicationContext() != null)
+      {
+         Lifecycle.endCall();
+      }
    }
 
 }
