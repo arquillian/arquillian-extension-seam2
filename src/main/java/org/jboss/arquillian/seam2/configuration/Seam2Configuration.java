@@ -41,6 +41,8 @@ public class Seam2Configuration implements Serializable
 
    private boolean autoPackage = true;
 
+   private String additionalLibraries;
+
    // Accessors
 
    public String getSeamVersion()
@@ -73,4 +75,13 @@ public class Seam2Configuration implements Serializable
       this.autoPackage = autoPackage;
    }
 
+   public String getAdditionalLibraries()
+   {
+      return additionalLibraries;
+   }
+
+   public void setAdditionalLibraries(String additionalLibraries)
+   {
+      this.additionalLibraries = additionalLibraries;
+   }
 }

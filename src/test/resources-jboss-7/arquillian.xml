@@ -3,16 +3,18 @@
   xmlns="http://jboss.org/schema/arquillian"
   xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
+  <defaultProtocol type="Servlet 3.0" />
+
   <container qualifier="jboss" default="true">
     <configuration>
-      <property name="jbossHome">target/jboss-4.2.3.GA</property>
+      <property name="jbossHome">
+        target/jboss-as-7.1.1.Final
+      </property>
     </configuration>
   </container>
 
   <extension qualifier="seam2">
-    <!-- This way you can override Seam version
-         which you have defined in pom.xml -->
-    <property name="seamVersion">2.2.1.Final</property>
-    <property name="jbossElVersion">1.0_02.CR5</property>
+    <property name="additionalLibraries">org.javassist:javassist:3.15.0-GA,dom4j:dom4j:1.6.1</property>
   </extension>
+
 </arquillian>

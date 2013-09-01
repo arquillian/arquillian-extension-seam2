@@ -18,6 +18,9 @@
 package org.jboss.arquillian.seam2.client;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.core.api.Instance;
@@ -92,7 +95,7 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
 
    private File[] resolveSeamDependencies()
    {
-      File[] seamDependencies = null;
+      final File[] seamDependencies;
       if (!Strings.isEmpty(configurationInstance.get().getSeamVersion()))
       {
          seamDependencies = resolveArtifact(Seam2Configuration.SEAM_ARTIFACT + ":" + configurationInstance.get().getSeamVersion());
@@ -102,7 +105,22 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
          seamDependencies = resolveArtifact(Seam2Configuration.SEAM_ARTIFACT, Seam2Configuration.DEFAULT_SEAM_VERSION);
       }
 
-      return seamDependencies;
+      return new ArrayMerger().merge(seamDependencies, addAdditionalDependencies());
+   }
+
+   private File[] addAdditionalDependencies()
+   {
+      File[] additionalDependencies = new File[0];
+
+      if (configurationInstance.get().getAdditionalLibraries() != null)
+      {
+         final String[] archives = configurationInstance.get().getAdditionalLibraries().split(",");
+         for (String gav :  archives)
+         {
+            additionalDependencies = new ArrayMerger().merge(additionalDependencies, resolveArtifact(gav));
+         }
+      }
+      return additionalDependencies;
    }
 
    /**
