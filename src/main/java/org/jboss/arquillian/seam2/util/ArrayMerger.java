@@ -15,16 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.seam2.client;
+package org.jboss.arquillian.seam2.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class ArrayMerger
+public class ArrayMerger
 {
 
-   public  <T> T[] merge(final T[] first, final T[] second)
+   public <T> T[] merge(final T[] first, final T[] second)
    {
       final List<T> merged = new ArrayList<T>(first.length + second.length);
       merged.addAll(Arrays.asList(first));

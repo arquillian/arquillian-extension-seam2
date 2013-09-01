@@ -28,6 +28,7 @@ import org.jboss.seam.Component;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.contexts.Lifecycle;
+import org.jboss.seam.security.Identity;
 
 /**
  * Test Enricher injecting Seam 2 components to the test class fields.
@@ -85,12 +86,19 @@ public class Seam2Enricher implements TestEnricher
 
    private Object resolveSeamComponent(Field seamComponent)
    {
+      if (Identity.class.isAssignableFrom(seamComponent.getType()))
+      {
+         return Identity.instance();
+      }
+
       final In in = seamComponent.getAnnotation(In.class);
+
       String name = in.value();
       if (Strings.isEmpty(name))
       {
          name = seamComponent.getName();
       }
+
       return getInstance(name);
    }
 

@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2009, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2013, Red Hat Middleware LLC, and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -16,10 +16,9 @@
  */
 package org.jboss.arquillian.seam2;
 
-import static org.fest.assertions.Assertions.assertThat;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.seam2.test.identity.IdentityStub;
 import org.jboss.arquillian.seam2.test.simple.FluidOuncesConverter;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.security.Identity;
@@ -30,14 +29,16 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.fest.assertions.Assertions.assertThat;
+
 @RunWith(Arquillian.class)
-public class ComponentInjectionTestCase
+public class IdentityInjectionTestCase
 {
    @Deployment
    public static Archive<?> createDeployment()
    {
       return ShrinkWrap.create(WebArchive.class, "test.war")
-                       .addClass(FluidOuncesConverter.class)
+                       .addClass(IdentityStub.class)
                        .addPackages(true, "org.fest")
                        .addPackages(true, "org.dom4j") // Required for JBoss AS 4.2.3.GA
                        .addAsResource(EmptyAsset.INSTANCE, "seam.properties")
@@ -45,27 +46,12 @@ public class ComponentInjectionTestCase
    }
 
    @In
-   FluidOuncesConverter fluidOuncesConverter;
+   Identity identity;
 
    @Test
-   public void shouldInjectSeamComponent() throws Exception
+   public void shouldInjectIdentity() throws Exception
    {
-      assertThat(fluidOuncesConverter).isNotNull();
-   }
-
-   @Test
-   public void shouldConvertFluidOuncesToMillilitres() throws Exception
-   {
-      // given
-      Double ouncesToConver = Double.valueOf(8.0d);
-      Double expectedMillilitres = Double.valueOf(236.5882368d);
-
-      // when
-      Double millilitres = fluidOuncesConverter.convertToMillilitres(ouncesToConver);
-
-      // then
-      assertThat(millilitres).isEqualTo(expectedMillilitres);
-
+      assertThat(identity).isNotNull().isInstanceOf(IdentityStub.class);
    }
 
 }

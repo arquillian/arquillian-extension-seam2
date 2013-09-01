@@ -18,15 +18,13 @@
 package org.jboss.arquillian.seam2.client;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.seam2.ReflectionHelper;
 import org.jboss.arquillian.seam2.configuration.Seam2Configuration;
+import org.jboss.arquillian.seam2.util.ArrayMerger;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.util.Strings;
