@@ -51,7 +51,8 @@
     <version.dom4j>1.6.1</version.dom4j>
 
     <version.fest.assert>1.4</version.fest.assert>
-    <version.shrinkwrap.descriptors>1.0.0-beta-5</version.shrinkwrap.descriptors>
+    <version.shrinkwrap.descriptors>2.0.0-alpha-5</version.shrinkwrap.descriptors>
+    <version.xml.unit>1.4</version.xml.unit>
     <version.seam>2.3.1.Final</version.seam>
 
     <!-- override from parent -->
@@ -62,6 +63,14 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+        <artifactId>shrinkwrap-descriptors-bom</artifactId>
+        <version>${version.shrinkwrap.descriptors}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+
       <dependency>
         <groupId>org.jboss.arquillian</groupId>
         <artifactId>arquillian-bom</artifactId>
@@ -97,7 +106,7 @@
     <dependency>
       <groupId>org.jboss.seam</groupId>
       <artifactId>jboss-seam</artifactId>
-      <version>2.2.1.Final</version>
+      <version>${version.seam}</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -140,8 +149,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.shrinkwrap</groupId>
-      <artifactId>shrinkwrap-extension-descriptors</artifactId>
+      <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+      <artifactId>shrinkwrap-descriptors-depchain</artifactId>
+      <type>pom</type>
       <version>${version.shrinkwrap.descriptors}</version>
     </dependency>
 
@@ -171,6 +181,14 @@
       <version>${version.fest.assert}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+      <version>${version.xml.unit}</version>
+      <scope>test</scope>
+    </dependency>
+
 
   </dependencies>
 

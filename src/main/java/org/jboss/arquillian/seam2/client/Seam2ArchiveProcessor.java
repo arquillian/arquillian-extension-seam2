@@ -18,24 +18,31 @@
 package org.jboss.arquillian.seam2.client;
 
 import java.io.File;
+import java.util.Map;
 
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.seam2.ReflectionHelper;
 import org.jboss.arquillian.seam2.configuration.Seam2Configuration;
+import org.jboss.arquillian.seam2.enhancement.WebArchiveExtractor;
+import org.jboss.arquillian.seam2.enhancement.WebDescriptorEnhancer;
 import org.jboss.arquillian.seam2.util.ArrayMerger;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.util.Strings;
 import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ArchivePath;
+import org.jboss.shrinkwrap.api.Filters;
+import org.jboss.shrinkwrap.api.Node;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
 
 /**
- * Extends test archive by adding Seam 2 dependecies.
+ * Extends test archive by adding Seam 2 dependencies and required resources if necessary.
  *
  * @author <a href="mailto:michaelschuetz83@gmail.com">Michael Schuetz</a>
  * @author <a href="mailto:bartosz.majsak@gmail.com">Bartosz Majsak</a>
@@ -57,9 +64,53 @@ public class Seam2ArchiveProcessor implements ApplicationArchiveProcessor
    public void process(Archive<?> applicationArchive, TestClass testClass)
    {
       boolean shouldEnrichTestArchiveWithSeamLibraries = configurationInstance.get().isAutoPackage();
-      if (hasSeamAnnotation(testClass) && shouldEnrichTestArchiveWithSeamLibraries)
+      if (hasSeamAnnotation(testClass))
       {
-         appendSeamLibraries(applicationArchive);
+         if (shouldEnrichTestArchiveWithSeamLibraries)
+         {
+            appendSeamLibraries(applicationArchive);
+         }
+         addSeamProperties(applicationArchive);
+         enhanceWebDescriptor(applicationArchive);
+      }
+
+   }
+
+   private void addSeamProperties(Archive<?> applicationArchive)
+   {
+      WebArchive webArchive = null;
+      if (applicationArchive instanceof EnterpriseArchive)
+      {
+         webArchive = new WebArchiveExtractor().findTestableWebArchive(applicationArchive);
+      }
+      else if (applicationArchive instanceof WebArchive)
+      {
+         webArchive = (WebArchive) applicationArchive;
+      }
+
+      if (webArchive == null)
+      {
+         return;
+      }
+
+      final Map<ArchivePath,Node> content = webArchive.getContent(Filters.include("seam.properties"));
+      if (content.isEmpty())
+      {
+         webArchive.addAsResource(EmptyAsset.INSTANCE, "seam.properties") ;
+      }
+
+   }
+
+   private void enhanceWebDescriptor(Archive<?> applicationArchive)
+   {
+      final WebDescriptorEnhancer webDescriptorEnhancer = new WebDescriptorEnhancer();
+      if (applicationArchive instanceof EnterpriseArchive)
+      {
+         webDescriptorEnhancer.enhance((EnterpriseArchive) applicationArchive);
+      }
+      else if (applicationArchive instanceof WebArchive)
+      {
+         webDescriptorEnhancer.enhance((WebArchive) applicationArchive);
       }
    }
 

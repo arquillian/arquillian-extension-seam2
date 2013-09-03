@@ -16,36 +16,26 @@
  */
 package org.jboss.arquillian.seam2;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.seam2.test.simple.FluidOuncesConverter;
-import org.jboss.seam.annotations.In;
-import org.junit.Test;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.runner.RunWith;
 
-import static org.fest.assertions.Assertions.assertThat;
-
-public abstract class ComponentInjectionTestCase
+@RunWith(Arquillian.class)
+public class ComponentInjectionNoSeamPropertiesArchiveTestCase extends ComponentInjectionTestCase
 {
-   @In
-   FluidOuncesConverter fluidOuncesConverter;
-
-   @Test
-   public void shouldInjectSeamComponent() throws Exception
+   @Deployment
+   public static Archive<?> createDeployment()
    {
-      assertThat(fluidOuncesConverter).isNotNull();
-   }
-
-   @Test
-   public void shouldConvertFluidOuncesToMillilitres() throws Exception
-   {
-      // given
-      Double ouncesToConver = Double.valueOf(8.0d);
-      Double expectedMillilitres = Double.valueOf(236.5882368d);
-
-      // when
-      Double millilitres = fluidOuncesConverter.convertToMillilitres(ouncesToConver);
-
-      // then
-      assertThat(millilitres).isEqualTo(expectedMillilitres);
-
+      return ShrinkWrap.create(WebArchive.class, "test.war")
+                       .addClass(FluidOuncesConverter.class)
+                       .addClass(ComponentInjectionTestCase.class)
+                       .addPackages(true, "org.fest")
+                       .addPackages(true, "org.dom4j"); // Required for JBoss AS 4.2.3.GA
    }
 
 }
