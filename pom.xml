@@ -14,7 +14,7 @@
 
   <groupId>org.jboss.arquillian.extension</groupId>
   <artifactId>arquillian-seam2</artifactId>
-  <version>1.0.0.Beta1</version>
+  <version>1.0.0.Final-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Arquillian Seam 2 Extension</name>
