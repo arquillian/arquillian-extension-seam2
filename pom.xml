@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <!-- Parent -->
   <parent>
     <groupId>org.jboss</groupId>
     <artifactId>jboss-parent</artifactId>
-    <version>8</version>
-    <relativePath />
+    <version>24</version>
+    <relativePath/>
   </parent>
 
   <!-- Model Version -->
@@ -20,9 +21,9 @@
   <name>Arquillian Seam 2 Extension</name>
   <url>http://www.jboss.org</url>
   <description>
-     Seam2 support for Arquillian:
-     - TestEnrichment for @In injection points from the Seam2 Context.
-     - Packaging support for adding the Seam2 framework
+    Seam2 support for Arquillian:
+    - TestEnrichment for @In injection points from the Seam2 Context.
+    - Packaging support for adding the Seam2 framework
   </description>
 
   <developers>
@@ -38,9 +39,10 @@
 
   <!-- Properties -->
   <properties>
-    <jbossas_7.dist.url>http://www.redpill-linpro.com/sites/default/files/node_files/jboss-as-7.2.0.final_.zip</jbossas_7.dist.url>
+    <jbossas_7.dist.url>http://www.redpill-linpro.com/sites/default/files/node_files/jboss-as-7.2.0.final_.zip
+    </jbossas_7.dist.url>
     <!-- Versioning -->
-    <version.arquillian_core>1.1.1.Final</version.arquillian_core>
+    <version.arquillian_core>1.1.13.Final</version.arquillian_core>
     <version.arquillian_jbossas>1.0.0.CR3</version.arquillian_jbossas>
 
     <version.jbossas_4>4.2.3.GA</version.jbossas_4>
@@ -55,9 +57,9 @@
     <version.seam>2.3.1.Final</version.seam>
 
     <!-- override from parent -->
-    <maven.compiler.argument.target>1.5</maven.compiler.argument.target>
-    <maven.compiler.argument.source>1.5</maven.compiler.argument.source>
-
+    <maven.compiler.target>1.5</maven.compiler.target>
+    <maven.compiler.source>1.5</maven.compiler.source>
+    <maven.min.version>3.0.0</maven.min.version>
   </properties>
 
   <dependencyManagement>
@@ -155,7 +157,6 @@
     </dependency>
 
     <!-- Test dependencies -->
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -187,7 +188,6 @@
       <version>${version.xml.unit}</version>
       <scope>test</scope>
     </dependency>
-
 
   </dependencies>
 
